@@ -1,10 +1,10 @@
 on:
   push
 
-name: generate_pkg_list
+name: generate_pkg_list_newconda
 
 jobs:
-  generate_pkg_list:
+  generate_pkg_list_newconda:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }}
 
@@ -38,7 +38,7 @@ jobs:
 
       - name: Build and test environment
         run: |
-          BiocManager::install(c("basilisk", "basilisk.utils"))
+          BiocManager::install(c("vjcitn/basilisk", "vjcitn/basilisk.utils"))
 
           deps <- c(
               "joblib==1.1.0",
