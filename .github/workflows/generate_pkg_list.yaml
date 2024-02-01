@@ -35,7 +35,6 @@ jobs:
       - name: Unset DYLD_FALLBACK_LIBRARY_PATH
         if: runner.os == 'macOS'
         run: unset DYLD_FALLBACK_LIBRARY_PATH
-        shell: bash
 
       - name: Build and test environment
         run: |
@@ -73,15 +72,13 @@ jobs:
 
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v2.2.0
-        shell: bash
 
       - name: List content of environment
         run: conda list -p ./sketchr-basilisk-env
-        shell: bash
 
       - name: List content of environment in format suitable for pasting into R
+        if: runner.os != "Windows"
         run: |
           conda list -p ./sketchr-basilisk-env | tail -n +4 |\
           tr -s ' ' | cut -f1,2 -d' ' |\
           sed -e 's/ /==/' -e 's/^..*$/"&",/' -e '$ s/.$/)/' -e '1s/^/c(/'
-        shell: bash
