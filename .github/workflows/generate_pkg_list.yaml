@@ -77,7 +77,7 @@ jobs:
         run: conda list -p ./sketchr-basilisk-env
 
       - name: List content of environment in format suitable for pasting into R
-        if: runner.os != "windows"
+        if: runner.os != 'Windows'
         run: |
           conda list -p ./sketchr-basilisk-env | tail -n +4 |\
           tr -s ' ' | cut -f1,2 -d' ' |\
