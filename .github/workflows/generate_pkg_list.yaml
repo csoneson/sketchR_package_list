@@ -32,6 +32,10 @@ jobs:
         with:
           bioc-version: ${{ matrix.config.bioc }}
 
+      - name: Unset DYLD_FALLBACK_LIBRARY_PATH
+        if: runner.os == 'macOS'
+        run: unset DYLD_FALLBACK_LIBRARY_PATH
+
       - name: Build and test environment
         run: |
           BiocManager::install(c("basilisk", "basilisk.utils"))
@@ -71,9 +75,11 @@ jobs:
 
       - name: List content of environment
         run: conda list -p ./sketchr-basilisk-env
+        shell: bash
 
       - name: List content of environment in format suitable for pasting into R
         run: |
           conda list -p ./sketchr-basilisk-env | tail -n +4 |\
           tr -s ' ' | cut -f1,2 -d' ' |\
           sed -e 's/ /==/' -e 's/^..*$/"&",/' -e '$ s/.$/)/' -e '1s/^/c(/'
+        shell: bash
