@@ -41,6 +41,7 @@ jobs:
           BiocManager::install(c("vjcitn/basilisk", "vjcitn/basilisk.utils"))
 
           deps <- c(
+              "python==3.9",
               "joblib==1.1.0",
               "numpy==1.21.5",
               "scikit-learn==1.0.2",
