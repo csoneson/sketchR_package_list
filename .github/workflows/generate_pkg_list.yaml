@@ -71,6 +71,8 @@ jobs:
 
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v2.2.0
+        with:
+          miniforge-version: "latest"
 
       - name: List content of environment
         run: conda list -p ./sketchr-basilisk-env
