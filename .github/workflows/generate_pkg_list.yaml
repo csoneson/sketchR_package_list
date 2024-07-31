@@ -69,10 +69,15 @@ jobs:
           print(basilisk::listPackages(env = file.path(".", "sketchr-basilisk-env")))
         shell: Rscript {0}
 
-      - name: Setup Miniconda
+      - name: Setup Miniconda (non-Windows)
         uses: conda-incubator/setup-miniconda@v2.2.0
+        if: runner.os != 'Windows'
         with:
           miniforge-version: "latest"
+
+      - name: Setup Miniconda (Windows)
+        uses: conda-incubator/setup-miniconda@v2.2.0
+        if: runner.os == 'Windows'
 
       - name: List content of environment
         run: conda list -p ./sketchr-basilisk-env
