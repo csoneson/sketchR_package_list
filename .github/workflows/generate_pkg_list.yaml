@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {os: macOS-latest, bioc: 'devel'}
+        - {os: macOS-12, bioc: 'devel'}
         - {os: windows-latest, bioc: 'devel'}
         - {os: ubuntu-latest, bioc: 'devel'}
         - {os: macos-14, bioc: 'devel'}
@@ -31,10 +31,6 @@ jobs:
         uses: grimbough/bioc-actions/setup-bioc@v1
         with:
           bioc-version: ${{ matrix.config.bioc }}
-
-      - name: Unset DYLD_FALLBACK_LIBRARY_PATH
-        if: runner.os == 'macOS'
-        run: unset DYLD_FALLBACK_LIBRARY_PATH
 
       - name: Build and test environment
         run: |
