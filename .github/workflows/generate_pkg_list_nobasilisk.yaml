@@ -1,0 +1,54 @@
+on:
+  push:
+
+name: generate_pkg_list_nobasilisk
+
+jobs:
+  generate_pkg_list_nobasilisk:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {os: macOS-12}
+        - {os: windows-latest}
+        - {os: ubuntu-latest}
+        - {os: macos-14}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_FORCE_SUGGESTS_: false
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Set up miniforge and build environment (non-Windows)
+        if: runner.os != 'Windows'
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          activate-environment: ./sketchr-env
+          environment-file: sketchr-env.yml
+
+      - name: Set up miniforge and build environment (Windows)
+        if: runner.os == 'Windows'
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          activate-environment: ./sketchr-env
+          environment-file: sketchr-env.yml
+
+      - name: List content of environment
+        run: conda list -p ./sketchr-env
+
+      - name: List content of environment in format suitable for pasting into R
+        if: runner.os != 'Windows'
+        run: |
+          conda list -p ./sketchr-env | tail -n +4 |\
+          tr -s ' ' | cut -f1,2 -d' ' |\
+          sed -e 's/ /==/' -e 's/^..*$/"&",/' -e '$ s/.$/)/' -e '1s/^/c(/'
