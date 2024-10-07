@@ -7,12 +7,13 @@ dependencies:
   - joblib
   - numpy==1.26.4
   - scikit-learn
-  - scipy
+  - scipy==1.13.1
   - threadpoolctl
   - pandas
   - scanpy
   - matplotlib-base
-  - libtiff
+  - libtiff==4.5.1
+  - pillow==10.0.0
   - pip
   - pip:
     - fbpca==1.0
