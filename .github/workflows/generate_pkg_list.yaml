@@ -1,5 +1,5 @@
 on:
-  workflow_dispatch:
+  push:
 
 name: generate_pkg_list
 
@@ -15,7 +15,7 @@ jobs:
         - {os: macOS-12, bioc: 'devel'}
         - {os: windows-latest, bioc: 'devel'}
         - {os: ubuntu-latest, bioc: 'devel'}
-        - {os: macos-14, bioc: 'devel'}
+        - {os: macos-latest, bioc: 'devel'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -34,7 +34,8 @@ jobs:
 
       - name: Build and test environment
         run: |
-          BiocManager::install(c("basilisk", "basilisk.utils"))
+          BiocManager::install("LTLA/basilisk", ref = "venv")
+          #BiocManager::install(c("basilisk", "basilisk.utils"))
 
           deps <- c(
               "python==3.12",
@@ -57,7 +58,7 @@ jobs:
           basilisk.utils::installConda()
           basilisk::setupBasiliskEnv(
             envpath = file.path(".", "sketchr-basilisk-env"),
-            packages = deps, pip = pip,
+            packages = c(), pip = c(deps, pip),
             channels = c("bioconda", "conda-forge"))
           res <- basilisk::basiliskRun(
             env = file.path(".", "sketchr-basilisk-env"),
