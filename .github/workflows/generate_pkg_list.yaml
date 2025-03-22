@@ -55,7 +55,7 @@ jobs:
               "scsampler==1.0.2"
           )
 
-          basilisk.utils::installConda()
+          #basilisk.utils::installConda()
           basilisk::setupBasiliskEnv(
             envpath = file.path(".", "sketchr-basilisk-env"),
             packages = c(), pip = c(deps, pip),
