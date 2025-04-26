@@ -1,0 +1,42 @@
+on:
+  push:
+
+name: generate_pkg_list_pyenv
+
+jobs:
+  generate_pkg_list_pyenv:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {os: windows-latest}
+        - {os: ubuntu-latest}
+        - {os: macos-14}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_FORCE_SUGGESTS_: false
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Build environment
+        run: |
+          pip install python==3.12.9 numpy==1.26.4 fbpca==1.0 geosketch==1.2 scsampler==1.0.2
+
+
+      - name: List content of environment
+        run: pip list
+
+      # - name: List content of environment in format suitable for pasting into R
+      #   if: runner.os != 'Windows'
+      #   run: |
+      #     conda list -p ./sketchr-env | tail -n +4 |\
+      #     tr -s ' ' | cut -f1,2 -d' ' |\
+      #     sed -e 's/ /==/' -e 's/^..*$/"&",/' -e '$ s/.$/)/' -e '1s/^/c(/'
