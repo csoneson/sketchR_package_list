@@ -57,7 +57,7 @@ jobs:
           #basilisk.utils::installConda()
           basilisk::setupBasiliskEnv(
             envpath = file.path(".", "sketchr-basilisk-env"),
-            packages = c(), pip = c(deps, pip),
+            packages = c(deps), pip = c(pip),
             channels = c("bioconda", "conda-forge"))
           res <- basilisk::basiliskRun(
             env = file.path(".", "sketchr-basilisk-env"),
