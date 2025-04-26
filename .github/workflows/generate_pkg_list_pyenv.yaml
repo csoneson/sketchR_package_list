@@ -28,11 +28,11 @@ jobs:
 
       - name: Build environment
         run: |
-          pip install python==3.12.9 numpy==1.26.4 fbpca==1.0 geosketch==1.2 scsampler==1.0.2
+          pip3 install python==3.12.9 numpy==1.26.4 fbpca==1.0 geosketch==1.2 scsampler==1.0.2
 
 
       - name: List content of environment
-        run: pip list
+        run: pip3 list
 
       # - name: List content of environment in format suitable for pasting into R
       #   if: runner.os != 'Windows'
