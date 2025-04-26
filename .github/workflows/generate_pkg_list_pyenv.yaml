@@ -28,11 +28,12 @@ jobs:
 
       - name: Build environment
         run: |
-          pip3 install python==3.12.9 numpy==1.26.4 fbpca==1.0 geosketch==1.2 scsampler==1.0.2
-
+          python3 -m venv ./sketchr-env
+          source ./sketchr-env/bin/activate
+          python3 -m pip install python==3.12.9 numpy==1.26.4 fbpca==1.0 geosketch==1.2 scsampler==1.0.2
 
       - name: List content of environment
-        run: pip3 list
+        run: pip3 list ./sketchr-env
 
       # - name: List content of environment in format suitable for pasting into R
       #   if: runner.os != 'Windows'
