@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {os: macOS-12}
         - {os: windows-latest}
         - {os: ubuntu-latest}
         - {os: macos-14}

@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {os: macOS-12, bioc: 'devel'}
         - {os: windows-latest, bioc: 'devel'}
         - {os: ubuntu-latest, bioc: 'devel'}
         - {os: macos-latest, bioc: 'devel'}
